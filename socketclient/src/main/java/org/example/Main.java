@@ -42,8 +42,13 @@ class TCP {
 
                 System.out.println("Server" + bufferedReader.readLine());
 
-                if(msg.equalsIgnoreCase("bye")){
-                    break;
+                try {
+
+                    if (msg.equalsIgnoreCase("bye")) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
 
