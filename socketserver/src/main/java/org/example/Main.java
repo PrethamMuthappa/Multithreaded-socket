@@ -27,14 +27,12 @@ class TCPServer implements Runnable{
            while (true) {
 
               try {
-
                   Socket socket = serverSocket.accept();
                   socket.setReuseAddress(true);
-
                   new Thread(new Clienthandler(socket)).start();
 
               } catch (Exception e) {
-                  throw new RuntimeException(e);
+                  e.printStackTrace();
               }
            }
 
@@ -74,8 +72,13 @@ class Clienthandler implements Runnable {
 
            try {
                String msgfromserver=bufferedReader.readLine();
-               System.out.println(msgfromserver);
 
+               if(msgfromserver==null){
+                   System.out.println("Client terminated");
+                   break;
+               }
+
+               System.out.println(msgfromserver);
 
                bufferedWriter.write("  received");
                bufferedWriter.newLine();
@@ -87,7 +90,7 @@ class Clienthandler implements Runnable {
                }
            }
            catch (Exception e){
-               e.printStackTrace();
+               System.out.println(e.getMessage());
            }
 
 
